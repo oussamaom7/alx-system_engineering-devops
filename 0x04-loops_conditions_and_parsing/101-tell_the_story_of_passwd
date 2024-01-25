@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# This script tells the story of /etc/passwd
+
+# Set the IFS (Internal Field Separator) to colon to parse the /etc/passwd file
+IFS=':'
+
+# Read each line of /etc/passwd and process the fields
+while read -r username _ uid gid _ home shell; do
+    # Extract the first letter of the password field
+    passcode="${_:0:1}"
+    
+    # Print the information for each user
+    echo "The user $username is part of the $gid gang, lives in $home and rides $shell. $uid's place is protected by the passcode $passcode, more info about the user here: $username"
+done < /etc/passwd

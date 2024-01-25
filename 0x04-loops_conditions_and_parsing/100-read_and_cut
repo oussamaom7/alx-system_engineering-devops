@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script displays specific information about users from /etc/passwd file
+
+# Use the read command to process each line of /etc/passwd
+while IFS=':' read -r username _ uid _ home shell; do
+    echo "$username:$uid:$home"
+done < /etc/passwd
