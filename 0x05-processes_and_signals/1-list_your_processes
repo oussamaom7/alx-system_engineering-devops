@@ -1,49 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# displays a list of currently running processes.
+# show all processes, for all users, including those
+# which might not have a TTY
+# Display in a user-oriented format
+# Show process hierarchy
 
-# Print header
-printf "%-10s %-5s %-5s %-7s %-7s %-7s %-7s %-10s %s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "COMMAND"
-
-# Function to print process tree recursively
-print_tree() {
-    local pid=$1
-    local level=$2
-    local space=""
-    for ((i=0; i<level; i++)); do
-        space+="   "
-    done
-
-    local children=$(pgrep -P $pid)
-    for child in $children; do
-        local user=$(ps -o user= -p $child)
-        local stat=$(ps -o stat= -p $child)
-        local pcpu=$(ps -o pcpu= -p $child)
-        local pmem=$(ps -o pmem= -p $child)
-        local vsz=$(ps -o vsz= -p $child)
-        local rss=$(ps -o rss= -p $child)
-        local tty=$(ps -o tty= -p $child)
-        local command=$(ps -o comm= -p $child)
-
-        printf "%-10s %-5s %-5s %-7s %-7s %-7s %-7s %-10s %s%s\n" "$user" "$child" "$pcpu" "$pmem" "$vsz" "$rss" "$tty" "$stat" "$space" "$command"
-        print_tree $child $((level+1))
-    done
-}
-
-# Starting from root processes
-roots=$(pgrep -P 1)
-
-# Print tree for each root process
-for root in $roots; do
-    user=$(ps -o user= -p $root)
-    stat=$(ps -o stat= -p $root)
-    pcpu=$(ps -o pcpu= -p $root)
-    pmem=$(ps -o pmem= -p $root)
-    vsz=$(ps -o vsz= -p $root)
-    rss=$(ps -o rss= -p $root)
-    tty=$(ps -o tty= -p $root)
-    command=$(ps -o comm= -p $root)
-
-    printf "%-10s %-5s %-5s %-7s %-7s %-7s %-7s %-10s %s\n" "$user" "$root" "$pcpu" "$pmem" "$vsz" "$rss" "$tty" "$stat" "$command"
-    print_tree $root 1
-done
-
-exit 0
+ps -auxf
