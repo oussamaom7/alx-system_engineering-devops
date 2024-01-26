@@ -1,15 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# displays To infinity and beyond indefinitely
+# With a sleep 2 in between each iteration
+# I am invincible!!! when receiving a SIGTERM signal
 
-# Find the PID of the 7-highlander process
-pid=$(pgrep -f "7-highlander")
-
-# Check if the process exists
-if [[ -n $pid ]]; then
-    # Send a SIGTERM signal to the process
-    kill -TERM "$pid"
-    echo "Process terminated"
-else
-    echo "Process not found"
-fi
-
-exit 0
+while true
+do 
+	echo "To infinity and beyond"
+	sleep 2
+	trap 'echo "I am invincible!!!"' SIGTERM
+done

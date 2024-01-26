@@ -1,17 +1,9 @@
 #!/bin/bash
 
-# Function to display the message and sleep
-display_message() {
-    echo "To infinity and beyond"
-    sleep 2
-}
+# displays To infinity and beyond indefinitely.
 
-# Trap Ctrl+C to exit gracefully
-trap 'echo "Exiting..."; exit' INT
-
-# Infinite loop
-while true; do
-    display_message
+while true
+do
+ echo "To infinity and beyond"
+ sleep 2
 done
-
-exit 0
