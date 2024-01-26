@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Find the PID of the 4-to_infinity_and_beyond process
+pid=$(pgrep -f "4-to_infinity_and_beyond")
+
+# Check if the process exists
+if [[ -n $pid ]]; then
+    # Send a termination signal to the process by terminating its parent process
+    ppid=$(ps -o ppid= -p "$pid")
+    if [[ -n $ppid ]]; then
+        kill -TERM "$ppid"
+        echo "Process terminated"
+    else
+        echo "Failed to find parent process"
+    fi
+else
+    echo "Process not found"
+fi
+
+exit 0
