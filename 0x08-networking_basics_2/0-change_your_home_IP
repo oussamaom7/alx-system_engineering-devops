@@ -1,7 +1,17 @@
-#!/usr/bin/env bash
-# Change localhost to 127.0.0.2
-# Change facebook.com to 8.8.8.8
+#!/bin/bash
 
-cp /etc/hosts ~/hosts.new
-sed -i 's/127.*$/127.0.0.2 localhost\n8.8.8.8 facebook.com/' ~/hosts.new
-cp -f ~/hosts.new /etc/hosts
+# Backup the original /etc/hosts file
+cp /etc/hosts /etc/hosts.bak
+
+# Modify the /etc/hosts file to change localhost resolution
+# and add the custom resolution for facebook.com
+sed -i '/127.0.0.1\s\+localhost/s/^/#/' /etc/hosts
+echo "127.0.0.2 localhost" >> /etc/hosts
+echo "8.8.8.8 facebook.com" >> /etc/hosts
+
+echo "The /etc/hosts file has been updated."
+
+# Instructions for reverting the changes
+echo "To revert the changes, restore the original /etc/hosts file:"
+echo "sudo cp /etc/hosts.bak /etc/hosts"
+
